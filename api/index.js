@@ -7,9 +7,9 @@ const axios = require('axios');
 const BOT_TOKEN = '8089342552:AAFITpAd2kI_zTFnuTiRgz20Na3tyHI2z1o'; 
 const YOUTUBE_API_KEY = 'AIzaSyArghTT46ER-KxypZp0R6W0wjcUdYWe-zw'; 
 
-// **المفاتيح النهائية الصحيحة**
-const RAPIDAPI_KEY = '37a01cb857fmshed562dc8a5ae19cp176145jsn2a05b73ca17e'; // <== تم الإدخال 
-const RAPIDAPI_HOST = 'youtube-to-mp3-converter2.p.rapidapi.com'; // <== تم الإدخال
+// **المفاتيح النهائية الصحيحة - تم التحديث بهذا المفتاح**
+const RAPIDAPI_KEY = '37a01cb857fmshed562dc8a5ae19cp176145jsn2a05b73ca17e'; // <== المفتاح الجديد
+const RAPIDAPI_HOST = 'youtube-to-mp3-converter2.p.rapidapi.com'; // <== المضيف
 const CONVERSION_ENDPOINT = `https://${RAPIDAPI_HOST}/dl`;
 
 const bot = new Telegraf(BOT_TOKEN);
