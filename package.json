@@ -1,0 +1,13 @@
+{
+  "name": "telegram-yt-bot-vercel",
+  "version": "1.0.0",
+  "description": "YouTube to MP3 bot using Telegraf and Vercel",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "telegraf": "^4.16.1"
+  }
+}
