@@ -1,15 +1,15 @@
-// **هذا الكود هو حل Node.js/Vercel النهائي (مجاني 100%)**
+// **الكود النهائي والمعدّل لـ Vercel / Node.js**
 
 const { Telegraf } = require('telegraf');
 const axios = require('axios');
 
-// توكن البوت الذي أدخلته
+// توكن البوت
 const BOT_TOKEN = '8089342552:AAFITpAd2kI_zTFnuTiRgz20Na3tyHI2z1o'; 
 const YOUTUBE_API_KEY = 'AIzaSyArghTT46ER-KxypZp0R6W0wjcUdYWe-zw'; 
 
-// **ضع مفاتيح RapidAPI هنا بمجرد الحصول عليها**
-const RAPIDAPI_KEY = 'YOUR_RAPIDAPI_KEY_HERE'; 
-const RAPIDAPI_HOST = 'YOUR_RAPIDAPI_HOST_HERE'; 
+// **المفاتيح النهائية الصحيحة**
+const RAPIDAPI_KEY = '37a01cb857fmshed562dc8a5ae19cp176145jsn2a05b73ca17e'; // <== تم الإدخال 
+const RAPIDAPI_HOST = 'youtube-to-mp3-converter2.p.rapidapi.com'; // <== تم الإدخال
 const CONVERSION_ENDPOINT = `https://${RAPIDAPI_HOST}/dl`;
 
 const bot = new Telegraf(BOT_TOKEN);
@@ -24,7 +24,7 @@ async function searchYouTube(query) {
             return {
                 title: item.snippet.title,
                 videoId: item.id.videoId,
-                videoUrl: `https://www.youtube.com/watch?v=${item.id.videoId}` // الرابط المستخدم في التحويل
+                videoUrl: `https://www.youtube.com/watch?v=${item.id.videoId}` 
             };
         }
     } catch (error) {
@@ -33,11 +33,11 @@ async function searchYouTube(query) {
     return null;
 }
 
-// دالة التحويل إلى MP3 باستخدام RapidAPI
+// دالة التحويل إلى MP3
 async function convertToMp3(videoUrl) {
     const postData = {
         url: videoUrl,
-        q: 'mp3' // قد يختلف حسب الواجهة
+        q: 'mp3' 
     };
 
     const headers = {
@@ -50,7 +50,6 @@ async function convertToMp3(videoUrl) {
         const response = await axios.post(CONVERSION_ENDPOINT, postData, { headers, timeout: 90000 });
         const mp3Data = response.data;
         
-        // يجب تكييف هذا الجزء حسب طريقة استجابة الواجهة
         if (mp3Data.link) return mp3Data.link;
         if (mp3Data.file) return mp3Data.file;
 
@@ -65,7 +64,6 @@ bot.on('text', async (ctx) => {
     const messageText = ctx.message.text.trim();
     let query = '';
 
-    // تحديد أمر البحث (يوت / yt)
     const lowerCaseText = messageText.toLowerCase();
     if (ctx.chat.type === 'group' || ctx.chat.type === 'supergroup') {
         if (lowerCaseText.startsWith('يوت')) {
