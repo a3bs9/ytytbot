@@ -1,4 +1,4 @@
-// **الكود النهائي والمعدّل لـ Vercel / Node.js**
+// **الكود النهائي والمعدّل (الإصدار 4) - حل مشكلة الواجهة**
 
 const { Telegraf } = require('telegraf');
 const axios = require('axios');
@@ -7,10 +7,10 @@ const axios = require('axios');
 const BOT_TOKEN = '8089342552:AAFITpAd2kI_zTFnuTiRgz20Na3tyHI2z1o'; 
 const YOUTUBE_API_KEY = 'AIzaSyArghTT46ER-KxypZp0R6W0wjcUdYWe-zw'; 
 
-// **المفاتيح النهائية الصحيحة - تم التحديث بهذا المفتاح**
-const RAPIDAPI_KEY = '37a01cb857fmshed562dc8a5ae19cp176145jsn2a05b73ca17e'; // <== المفتاح الجديد
-const RAPIDAPI_HOST = 'youtube-to-mp3-converter2.p.rapidapi.com'; // <== المضيف
-const CONVERSION_ENDPOINT = `https://${RAPIDAPI_HOST}/dl`;
+// **المفاتيح النهائية الصحيحة - المفتاح الأخير مع مضيف جديد**
+const RAPIDAPI_KEY = '37a01cb857fmshed562dc8a5ae19cp176145jsn2a05b73ca17e'; 
+const RAPIDAPI_HOST = 'serpapi-youtube-api.p.rapidapi.com'; // <== تم التغيير لمضيف بديل
+const CONVERSION_ENDPOINT = `https://${RAPIDAPI_HOST}/api/v1/download`; // <== تم التغيير لنقطة اتصال بديلة
 
 const bot = new Telegraf(BOT_TOKEN);
 
@@ -33,25 +33,25 @@ async function searchYouTube(query) {
     return null;
 }
 
-// دالة التحويل إلى MP3
+// دالة التحويل إلى MP3 باستخدام الواجهة البديلة
 async function convertToMp3(videoUrl) {
-    const postData = {
-        url: videoUrl,
-        q: 'mp3' 
+    const params = {
+        'url': videoUrl,
+        'type': 'mp3' // طلب صوتي
     };
 
     const headers = {
         'X-RapidAPI-Key': RAPIDAPI_KEY,
-        'X-RapidAPI-Host': RAPIDAPI_HOST,
-        'Content-Type': 'application/json'
+        'X-RapidAPI-Host': RAPIDAPI_HOST
     };
 
     try {
-        const response = await axios.post(CONVERSION_ENDPOINT, postData, { headers, timeout: 90000 });
+        const response = await axios.get(CONVERSION_ENDPOINT, { params, headers, timeout: 90000 });
         const mp3Data = response.data;
         
-        if (mp3Data.link) return mp3Data.link;
-        if (mp3Data.file) return mp3Data.file;
+        // يجب تكييف هذا الجزء حسب طريقة استجابة الواجهة
+        if (mp3Data.result && mp3Data.result.download_url) return mp3Data.result.download_url;
+        if (mp3Data.download_url) return mp3Data.download_url;
 
     } catch (error) {
         console.error('RapidAPI Conversion Error:', error.message);
